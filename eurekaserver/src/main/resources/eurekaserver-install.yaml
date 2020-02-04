@@ -59,6 +59,9 @@ spec:
                      --eureka.instance.preferIpAddress=false
                      --eureka.client.service-url.defaultZone=http://eureka-server-0.${APP_NAME}:9090/eureka,http://eureka-server-1.${APP_NAME}:9090/eureka
                      "
+          volumeMounts:
+            - mountPath: /usr/local/web/logs
+              name: eureka-sever-pvc
           resources:
             limits:
               cpu: 1000m
@@ -82,3 +85,14 @@ spec:
             httpGet:
               path: /actuator/health
               port: 9091
+  volumeClaimTemplates:
+    - metadata:
+        name: eureka-sever-pvc
+        labels:
+          app: eureka-server
+      spec:
+        accessModes:
+          - ReadWriteMany
+        resources:
+          requests:
+            storage: 1Gi
