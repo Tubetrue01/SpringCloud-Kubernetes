@@ -1,0 +1,25 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: nginx-ingress
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+spec:
+  rules:
+    - host: my.eureka.com
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: eureka-server
+              servicePort: 9090
+          - path: /actuator/health
+            backend:
+              serviceName: eureka-server
+              servicePort: 9091
+    - host: my.kibana.com
+      http:
+        paths:
+          - backend:
+              serviceName: kibana
+              servicePort: 5601
