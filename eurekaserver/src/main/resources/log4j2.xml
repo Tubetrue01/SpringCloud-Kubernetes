@@ -12,8 +12,8 @@
             <ThresholdFilter level="trace" onMatch="ACCEPT" onMismatch="DENY"/>
             <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%-4p] (%-30F:%L)---%m%n"/>
         </Console>
-        <!-- This will print out all the information, each time the size exceeds the size, the size of the log will be automatically stored in the folder created by the year-month and compressed, as an archive -->
-        <RollingFile name="RollingFile" fileName="/usr/local/web/logs/eureka-server/info.log" filePattern="/usr/local/web/logs/eureka-server/%d{yyyy-MM}/%d{yyyy-MM-dd}-%i.log.tar.gz" append="true">
+        <RollingFile name="RollingFile" fileName="/var/log/springcloud/eureka-server/${env:POD_NAME}/info.log" filePattern="/var/log/springcloud/eureka-server/${env:POD_NAME}/%d{yyyy-MM}/%d{yyyy-MM-dd}-%i.log.tar.gz" append="true">
+<!--            <JsonLayout/>-->
             <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%-4p] (%-30F:%L)---%m%n"/>
             <Policies>
                 <!--<SizxeBasedTriggeringPolicy size="50MB"/>-->

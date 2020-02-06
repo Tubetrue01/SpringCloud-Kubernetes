@@ -36,7 +36,7 @@ spec:
     spec:
       containers:
         - name: eureka-server
-          image: tubetrue01/eureka-server:v1
+          image: tubetrue01/eureka-server:v4
           ports:
             - containerPort: 9090
               name: server
@@ -59,9 +59,6 @@ spec:
                      --eureka.instance.preferIpAddress=false
                      --eureka.client.service-url.defaultZone=http://eureka-server-0.${APP_NAME}:9090/eureka,http://eureka-server-1.${APP_NAME}:9090/eureka
                      "
-          volumeMounts:
-            - mountPath: /usr/local/web/logs
-              name: eureka-sever-pvc
           resources:
             limits:
               cpu: 1000m
@@ -85,14 +82,10 @@ spec:
             httpGet:
               path: /actuator/health
               port: 9091
-  volumeClaimTemplates:
-    - metadata:
-        name: eureka-sever-pvc
-        labels:
-          app: eureka-server
-      spec:
-        accessModes:
-          - ReadWriteMany
-        resources:
-          requests:
-            storage: 1Gi
+          volumeMounts:
+            - mountPath: /var/log/springcloud/eureka-server
+              name: log-path
+      volumes:
+        - name: log-path
+          hostPath:
+            path: /var/log/springcloud/eureka-server

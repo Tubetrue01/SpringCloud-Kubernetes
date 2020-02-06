@@ -28,7 +28,7 @@ spec:
     spec:
       containers:
         - name: kibana
-          image: tubetrue01/kibana-oss:7.5.2
+          image: tubetrue01/kibana:7.5.2
           resources:
             limits:
               cpu: 1000m
@@ -36,6 +36,6 @@ spec:
               cpu: 1000m
           env:
             - name: ELASTICSEARCH_HOSTS
-              value: http://elastic-search:9200
+              value: http://elastic-search:9200  # Cluster DNS
           ports:
             - containerPort: 5601

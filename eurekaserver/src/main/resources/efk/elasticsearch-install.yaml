@@ -32,7 +32,7 @@ spec:
     spec:
       containers:
         - name: elastic-search
-          image: tubetrue01/elasticsearch-oss:7.5.2
+          image: tubetrue01/elasticsearch:7.5.2
           resources:
             limits:
               cpu: 1000m
@@ -45,16 +45,50 @@ spec:
             - containerPort: 9300
               name: inter-node
               protocol: TCP
+          volumeMounts:
+            - name: elastic-search-pvc
+              mountPath: /usr/share/elasticsearch/data
           env:
             - name: DISCOVERY.TYPE                # 注意大写
               value: single-node
+            - name: discovery.seed_hosts
+              value: "elastic-search-0.elastic-search"
             - name: cluster.initial_master_nodes  # 注意小写
-              value: elastic-search-0
+              value: "elastic-search-0"
             - name: node.name
               valueFrom:
                 fieldRef:
                   fieldPath: metadata.name
             - name: cluster.name
-              value: elastic-search
+              value: "elastic-search"
             - name: ES_JAVA_OPTS
               value: "-Xms256m -Xmx256m"
+      initContainers:
+        - name: fix-permissions
+          image: tubetrue01/busybox:1.27
+          command: ["sh", "-c", "chown -R 1000:1000 /usr/share/elasticsearch/data"]
+          securityContext:
+            privileged: true
+          volumeMounts:
+            - name: elastic-search-pvc
+              mountPath: /usr/share/elasticsearch/data
+        - name: increase-vm-max-map
+          image: tubetrue01/busybox:1.27
+          command: ["sysctl", "-w", "vm.max_map_count=262144"]
+          securityContext:
+            privileged: true
+        - name: increase-fd-ulimit
+          image: tubetrue01/busybox:1.27
+          command: ["sh", "-c", "ulimit -n 65536"]
+          securityContext:
+            privileged: true
+  volumeClaimTemplates:
+    - metadata:
+        name: elastic-search-pvc
+        labels:
+          app: elastic-search
+      spec:
+        accessModes: [ "ReadWriteMany" ]
+        resources:
+          requests:
+            storage: 2Gi
