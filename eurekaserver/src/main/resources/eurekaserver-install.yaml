@@ -49,6 +49,10 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: metadata.name
+            - name: POD_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP
             - name: APP_OPTS
               value: "
                      --spring.application.name=${APP_NAME}

@@ -10,11 +10,11 @@
         <Console name="Console" target="SYSTEM_OUT">
             <!-- The console only outputs level and above information (onMatch), other direct rejections (onMismatch) -->
             <ThresholdFilter level="trace" onMatch="ACCEPT" onMismatch="DENY"/>
-            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%-4p] (%-30F:%L)---%m%n"/>
+            <PatternLayout pattern="[nginx-ingress-controller-ffdffccdf-4gp] [192.168.0.1] %d{yyyy-MM-dd HH:mm:ss.SSS} [%-4p] (%-30F:%L)---%m%n"/>
         </Console>
         <RollingFile name="RollingFile" fileName="/var/log/springcloud/eureka-server/${env:POD_NAME}/info.log" filePattern="/var/log/springcloud/eureka-server/${env:POD_NAME}/%d{yyyy-MM}/%d{yyyy-MM-dd}-%i.log.tar.gz" append="true">
 <!--            <JsonLayout/>-->
-            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%-4p] (%-30F:%L)---%m%n"/>
+            <PatternLayout pattern="[${env:POD_NAME}] [${env:POD_IP}] %d{yyyy-MM-dd HH:mm:ss.SSS} [%-4p] (%-30F:%L)---%m%n"/>
             <Policies>
                 <!--<SizxeBasedTriggeringPolicy size="50MB"/>-->
                 <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
