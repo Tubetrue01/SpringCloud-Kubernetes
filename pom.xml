@@ -8,7 +8,7 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>2.2.4.RELEASE</version>
-        <relativePath/> <!-- lookup parent from repository -->
+        <relativePath/>
     </parent>
 
     <groupId>org.tubetrue01</groupId>
@@ -20,18 +20,34 @@
         <java.version>11</java.version>
         <spring-cloud.version>Hoxton.SR1</spring-cloud.version>
         <eureka-server.version>2.2.1.RELEASE</eureka-server.version>
+        <eureka-client.version>2.2.1.RELEASE</eureka-client.version>
         <spring-web.version>2.2.4.RELEASE</spring-web.version>
         <spring-actuator.version>2.2.4.RELEASE</spring-actuator.version>
         <log4j.version>2.2.4.RELEASE</log4j.version>
         <log4j.web.version>2.13.0</log4j.web.version>
-
+        <mybatis.version>2.1.1</mybatis.version>
+        <common.version>v1.0.0</common.version>
+        <lombok.version>1.18.10</lombok.version>
+        <mysql.version>8.0.19</mysql.version>
+        <jdbc.version>2.2.4.RELEASE</jdbc.version>
     </properties>
 
     <modules>
         <module>eurekaserver</module>
+        <module>userprovider</module>
+        <module>common</module>
     </modules>
 
     <dependencies>
+
+        <!-- Lombok -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
         <!-- Log4j2 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -61,6 +77,35 @@
 
     <dependencyManagement>
         <dependencies>
+
+            <!-- JDBC -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-jdbc</artifactId>
+                <version>${jdbc.version}</version>
+            </dependency>
+
+            <!-- MySQL -->
+            <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>${mysql.version}</version>
+            </dependency>
+
+            <!-- Mybatis -->
+            <dependency>
+                <groupId>org.mybatis.spring.boot</groupId>
+                <artifactId>mybatis-spring-boot-starter</artifactId>
+                <version>${mybatis.version}</version>
+            </dependency>
+
+            <!-- Common -->
+            <dependency>
+                <groupId>org.tubetrue01</groupId>
+                <artifactId>common</artifactId>
+                <version>${common.version}</version>
+            </dependency>
+
             <!--web-->
             <dependency>
                 <groupId>org.springframework.boot</groupId>
@@ -80,6 +125,13 @@
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
                 <version>${eureka-server.version}</version>
+            </dependency>
+
+            <!-- EurekaClient -->
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+                <version>${eureka-client.version}</version>
             </dependency>
 
             <!-- SpringCloud -->
