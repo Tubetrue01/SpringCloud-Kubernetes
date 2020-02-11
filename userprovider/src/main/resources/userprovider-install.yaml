@@ -84,6 +84,11 @@ spec:
             httpGet:
               path: /actuator/health
               port: 8081
+          lifecycle:
+            preStop:
+              httpGet:
+                port: 8080
+                path: /userprovider/eureka/offline
           volumeMounts:
             - mountPath: /var/log/springcloud/user-provider
               name: log-path
