@@ -12,7 +12,7 @@
     </parent>
 
     <groupId>org.tubetrue01</groupId>
-    <artifactId>Cloud</artifactId>
+    <artifactId>cloud</artifactId>
     <version>1.0.0</version>
     <packaging>pom</packaging>
 
@@ -26,6 +26,7 @@
         <log4j.version>2.2.4.RELEASE</log4j.version>
         <log4j.web.version>2.13.0</log4j.web.version>
         <mybatis.version>2.1.1</mybatis.version>
+        <openfeign.version>2.1.1.RELEASE</openfeign.version>
         <common.version>v1.0.0</common.version>
         <lombok.version>1.18.10</lombok.version>
         <mysql.version>8.0.19</mysql.version>
@@ -35,10 +36,25 @@
     <modules>
         <module>eurekaserver</module>
         <module>userprovider</module>
+        <module>userconsumer</module>
         <module>common</module>
     </modules>
 
     <dependencies>
+
+        <!-- Actuator -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+            <version>${spring-actuator.version}</version>
+        </dependency>
+
+        <!-- EurekaClient -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+            <version>${eureka-client.version}</version>
+        </dependency>
 
         <!-- Lombok -->
         <dependency>
@@ -78,6 +94,13 @@
     <dependencyManagement>
         <dependencies>
 
+            <!-- OpenFeign -->
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-starter-openfeign</artifactId>
+                <version>${openfeign.version}</version>
+            </dependency>
+
             <!-- JDBC -->
             <dependency>
                 <groupId>org.springframework.boot</groupId>
@@ -106,18 +129,11 @@
                 <version>${common.version}</version>
             </dependency>
 
-            <!--web-->
+            <!-- Web -->
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-web</artifactId>
                 <version>${spring-web.version}</version>
-            </dependency>
-
-            <!--actuator-->
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-starter-actuator</artifactId>
-                <version>${spring-actuator.version}</version>
             </dependency>
 
             <!-- EurekaServer -->
@@ -125,13 +141,6 @@
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
                 <version>${eureka-server.version}</version>
-            </dependency>
-
-            <!-- EurekaClient -->
-            <dependency>
-                <groupId>org.springframework.cloud</groupId>
-                <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
-                <version>${eureka-client.version}</version>
             </dependency>
 
             <!-- SpringCloud -->
