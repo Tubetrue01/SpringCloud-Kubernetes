@@ -1,0 +1,97 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: user-consumer
+  labels:
+    app: user-consumer
+spec:
+  ports:
+    - port: 7070
+      name: server
+      targetPort: 7070
+    - port: 7071
+      name: management
+      targetPort: 7071
+  selector:
+    app: user-consumer
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: user-consumer
+  labels:
+    app: user-consumer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: user-consumer
+  template:
+    metadata:
+      labels:
+        app: user-consumer
+    spec:
+      containers:
+        - name: user-consumer
+          image: tubetrue01/user-consumer:v1
+          ports:
+            - containerPort: 7070
+              name: server
+            - containerPort: 7071
+              name: management
+          env:
+            - name: APP_NAME
+              value: "user-consumer"
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: POD_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP
+            - name: APP_OPTS
+              value: "
+                     --spring.application.name=${APP_NAME}
+                     --eureka.instance.appname=${APP_NAME}
+                     --eureka.instance.hostname=${POD_NAME}.${APP_NAME}
+                     --registerWithEureka=true
+                     --fetchRegistry=true
+                     --eureka.instance.preferIpAddress=true
+                     --eureka.client.service-url.defaultZone=http://eureka-server-0.eureka-server:9090/eureka,http://eureka-server-1.eureka-server:9090/eureka
+                     "
+          resources:
+            limits:
+              cpu: 1000m
+              memory: 252Mi
+            requests:
+              cpu: 100m
+              memory: 200Mi
+          readinessProbe:
+            initialDelaySeconds: 20
+            periodSeconds: 5
+            timeoutSeconds: 10
+            failureThreshold: 5
+            httpGet:
+              path: /actuator/health
+              port: 7071
+          livenessProbe:
+            initialDelaySeconds: 60
+            periodSeconds: 5
+            timeoutSeconds: 5
+            failureThreshold: 3
+            httpGet:
+              path: /actuator/health
+              port: 7071
+          lifecycle:
+            preStop:
+              httpGet:
+                port: 7070
+                path: /userconsumer/eureka/offline
+          volumeMounts:
+            - mountPath: /var/log/springcloud/user-consumer
+              name: log-path
+      volumes:
+        - name: log-path
+          hostPath:
+            path: /var/log/springcloud/user-consumer
