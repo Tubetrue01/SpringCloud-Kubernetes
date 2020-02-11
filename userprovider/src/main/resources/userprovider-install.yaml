@@ -1,20 +1,21 @@
-apiVersion: v1
-kind: Service
-metadata:
-  name: user-provider
-  labels:
-    app: user-provider
-spec:
-  ports:
-    - port: 8080
-      name: server
-      targetPort: 8080
-    - port: 8081
-      name: management
-      targetPort: 8081
-  selector:
-    app: user-provider
----
+#
+#apiVersion: v1
+#kind: Service
+#metadata:
+#  name: user-provider
+#  labels:
+#    app: user-provider
+#spec:
+#  ports:
+#    - port: 8080
+#      name: server
+#      targetPort: 8080
+#    - port: 8081
+#      name: management
+#      targetPort: 8081
+#  selector:
+#    app: user-provider
+#---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -57,7 +58,7 @@ spec:
                      --eureka.instance.hostname=${POD_NAME}.${APP_NAME}
                      --registerWithEureka=true
                      --fetchRegistry=true
-                     --eureka.instance.preferIpAddress=false
+                     --eureka.instance.preferIpAddress=true
                      --eureka.client.service-url.defaultZone=http://eureka-server-0.eureka-server:9090/eureka,http://eureka-server-1.eureka-server:9090/eureka
                      "
           resources:

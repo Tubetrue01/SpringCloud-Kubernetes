@@ -155,6 +155,18 @@ data:
           format1 /^\[(?<PodName>.*?)\]\s+\[(?<PodIP>\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})\]\s+(?<timestamp>\d{4}-\d{1,2}-\d{1,2}\s\d{1,2}:\d{1,2}:\d{1,2}\.\d{1,3})\s*(?<level>\[\w+\])\s(?<class>\(\w+.java\s*:\d{1,}\))---(?<message>.*)/
         </parse>
     </source>
+    <source>
+        @type tail
+        @id user-consumer_logs
+        path /var/log/springcloud/user-consumer/user-consumer*/*.log
+        pos_file /var/log/springcloud/user-consumer/fluentd.pos
+        tag user-consumer
+        <parse>
+           @type multiline
+           format_firstline /\d{4}-\d{1,2}-\d{1,2}\s\d{1,2}:\d{1,2}:\d{1,2}\.\d{1,3}/
+           format1 /^\[(?<PodName>.*?)\]\s+\[(?<PodIP>\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})\]\s+(?<timestamp>\d{4}-\d{1,2}-\d{1,2}\s\d{1,2}:\d{1,2}:\d{1,2}\.\d{1,3})\s*(?<level>\[\w+\])\s(?<class>\(\w+.java\s*:\d{1,}\))---(?<message>.*)/
+        </parse>
+       </source>
 
   output.conf: |-
     <match eureka-server>
@@ -183,8 +195,7 @@ data:
 
       </buffer>
     </match>
-
-     <match user-provider>
+    <match user-provider>
       @id elasticsearch-user-provider
       @type elasticsearch
       @log_level info
@@ -209,3 +220,30 @@ data:
         overflow_action block
       </buffer>
     </match>
+
+    <match user-consumer>
+         @id elasticsearch-user-consumer
+         @type elasticsearch
+         @log_level info
+         include_tag_key true
+         host elastic-search
+         port 9200
+         logstash_format true
+         request_timeout    30s
+         logstash_prefix user-consumer
+
+         <buffer>
+           @type file
+           path /var/log/fluentd-buffers/user-consumer.buffer
+           flush_mode interval
+           retry_type exponential_backoff
+           flush_thread_count 2
+           flush_interval 3s
+           retry_forever
+           retry_max_interval 30
+           chunk_limit_size 2M
+           queue_limit_length 8
+           overflow_action block
+         </buffer>
+       </match>
+
