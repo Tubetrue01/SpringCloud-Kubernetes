@@ -9,7 +9,7 @@
 	</parent>
 	<artifactId>gateway</artifactId>
 	<version>1.0.0</version>
-	<name>gateway</name>
+	<name>Gateway</name>
 
 	<dependencies>
 		<!-- Gateway -->

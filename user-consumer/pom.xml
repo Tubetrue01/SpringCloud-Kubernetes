@@ -9,7 +9,7 @@
     </parent>
     <artifactId>user-consumer</artifactId>
     <version>1.0.0</version>
-    <name>userconsumer</name>
+    <name>UserConsumer</name>
     <packaging>jar</packaging>
 
     <properties>

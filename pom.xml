@@ -35,9 +35,9 @@
     </properties>
 
     <modules>
-        <module>eurekaserver</module>
-        <module>userprovider</module>
-        <module>userconsumer</module>
+        <module>eureka-server</module>
+        <module>user-provider</module>
+        <module>user-consumer</module>
         <module>gateway</module>
         <module>common</module>
     </modules>
