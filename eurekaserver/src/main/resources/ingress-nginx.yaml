@@ -23,9 +23,9 @@ spec:
           - backend:
               serviceName: kibana
               servicePort: 5601
-    - host: my.userprovider.com
+    - host: my.gateway.com
       http:
         paths:
           - backend:
-              serviceName: user-provider
-              servicePort: 8080
+              serviceName: gateway
+              servicePort: 5050

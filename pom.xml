@@ -27,6 +27,7 @@
         <log4j.web.version>2.13.0</log4j.web.version>
         <mybatis.version>2.1.1</mybatis.version>
         <openfeign.version>2.1.1.RELEASE</openfeign.version>
+        <gateway.version>2.1.1.RELEASE</gateway.version>
         <common.version>v1.0.0</common.version>
         <lombok.version>1.18.10</lombok.version>
         <mysql.version>8.0.19</mysql.version>
@@ -37,11 +38,11 @@
         <module>eurekaserver</module>
         <module>userprovider</module>
         <module>userconsumer</module>
+        <module>gateway</module>
         <module>common</module>
     </modules>
 
     <dependencies>
-
         <!-- Actuator -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -93,6 +94,13 @@
 
     <dependencyManagement>
         <dependencies>
+
+            <!-- Gateway -->
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-starter-gateway</artifactId>
+                <version>${gateway.version}</version>
+            </dependency>
 
             <!-- OpenFeign -->
             <dependency>

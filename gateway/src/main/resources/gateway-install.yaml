@@ -1,47 +1,47 @@
-#apiVersion: v1
-#kind: Service
-#metadata:
-#  name: user-consumer
-#  labels:
-#    app: user-consumer
-#spec:
-#  ports:
-#    - port: 7070
-#      name: server
-#      targetPort: 7070
-#    - port: 7071
-#      name: management
-#      targetPort: 7071
-#  selector:
-#    app: user-consumer
-#---
+apiVersion: v1
+kind: Service
+metadata:
+  name: gateway
+  labels:
+    app: gateway
+spec:
+  ports:
+    - port: 5050
+      name: server
+      targetPort: 5050
+    - port: 5051
+      name: management
+      targetPort: 5051
+  selector:
+    app: gateway
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: user-consumer
+  name: gateway
   labels:
-    app: user-consumer
+    app: gateway
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: user-consumer
+      app: gateway
   template:
     metadata:
       labels:
-        app: user-consumer
+        app: gateway
     spec:
       containers:
-        - name: user-consumer
-          image: tubetrue01/user-consumer:v1
+        - name: gateway
+          image: tubetrue01/gateway:v1
           ports:
-            - containerPort: 7070
+            - containerPort: 5050
               name: server
-            - containerPort: 7071
+            - containerPort: 5051
               name: management
           env:
             - name: APP_NAME
-              value: "user-consumer"
+              value: "gateway"
             - name: POD_NAME
               valueFrom:
                 fieldRef:
@@ -74,7 +74,7 @@ spec:
             failureThreshold: 5
             httpGet:
               path: /actuator/health
-              port: 7071
+              port: 5051
           livenessProbe:
             initialDelaySeconds: 60
             periodSeconds: 5
@@ -82,16 +82,16 @@ spec:
             failureThreshold: 3
             httpGet:
               path: /actuator/health
-              port: 7071
+              port: 5051
           lifecycle:
             preStop:
               httpGet:
-                port: 7070
-                path: /userconsumer/eureka/offline
+                port: 5050
+                path: /eureka/offline
           volumeMounts:
-            - mountPath: /var/log/springcloud/user-consumer
+            - mountPath: /var/log/springcloud/gateway
               name: log-path
       volumes:
         - name: log-path
           hostPath:
-            path: /var/log/springcloud/user-consumer
+            path: /var/log/springcloud/gateway
