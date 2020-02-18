@@ -32,6 +32,7 @@
         <lombok.version>1.18.10</lombok.version>
         <mysql.version>8.0.19</mysql.version>
         <jdbc.version>2.2.4.RELEASE</jdbc.version>
+        <spring-boot-admin.version>2.2.2</spring-boot-admin.version>
     </properties>
 
     <modules>
@@ -40,6 +41,7 @@
         <module>user-consumer</module>
         <module>gateway</module>
         <module>common</module>
+        <module>admin</module>
     </modules>
 
     <dependencies>
@@ -94,6 +96,12 @@
 
     <dependencyManagement>
         <dependencies>
+            <!-- Admin -->
+            <dependency>
+                <groupId>de.codecentric</groupId>
+                <artifactId>spring-boot-admin-starter-server</artifactId>
+                <version>${spring-boot-admin.version}</version>
+            </dependency>
 
             <!-- Gateway -->
             <dependency>
