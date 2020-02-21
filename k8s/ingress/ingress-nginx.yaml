@@ -29,3 +29,9 @@ spec:
           - backend:
               serviceName: gateway
               servicePort: 5050
+    - host: my.rabbitmq.com
+      http:
+        paths:
+          - backend:
+              serviceName: rabbitmq
+              servicePort: 15672
