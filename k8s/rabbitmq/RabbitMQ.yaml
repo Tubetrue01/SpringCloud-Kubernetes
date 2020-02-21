@@ -4,7 +4,6 @@ metadata:
   name: rabbitmq
   labels:
     app: rabbitmq
-  namespace: zpf
 spec:
   selector:
     matchLabels:
@@ -15,7 +14,6 @@ spec:
       name: rabbitmq
       labels:
         app: rabbitmq
-      namespace: zpf
     spec:
       containers:
         - name: rabbitmq
@@ -37,7 +35,6 @@ metadata:
   name: rabbitmq
   labels:
     app: rabbitmq
-  namespace: zpf
 spec:
   selector:
     app: rabbitmq
