@@ -1,0 +1,61 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: jenkins
+  labels:
+    app: jenkins
+  namespace: zpf
+spec:
+  selector:
+    matchLabels:
+      app: jenkins
+  serviceName: jenkins
+  template:
+    metadata:
+      name: jenkins
+      labels:
+        app: jenkins
+      namespace: zpf
+    spec:
+      containers:
+        - name: jenkins
+          image: tubetrue01/jenkins:2.60.3
+          ports:
+            - containerPort: 8080
+            - containerPort: 50000
+          resources:
+            requests:
+              cpu: 100m
+              memory: 256Mi
+            limits:
+              cpu: 1000m
+              memory: 512Mi
+          volumeMounts:
+            - mountPath: /var/jenkins_home
+              name: jenkins-pvc
+  volumeClaimTemplates:
+    - metadata:
+        name: jenkins-pvc
+        labels:
+          app: jenkins
+        namespace: zpf
+      spec:
+        accessModes: [ "ReadWriteMany" ]
+        resources:
+          requests:
+            storage: 5Gi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: jenkins
+  labels:
+    app: jenkins
+  namespace: zpf
+spec:
+  clusterIP: None
+  selector:
+    app: jenkins
+  ports:
+    - port: 8080
+      targetPort: 8080
