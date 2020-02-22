@@ -4,7 +4,6 @@ metadata:
   name: jenkins
   labels:
     app: jenkins
-  namespace: zpf
 spec:
   selector:
     matchLabels:
@@ -15,7 +14,6 @@ spec:
       name: jenkins
       labels:
         app: jenkins
-      namespace: zpf
     spec:
       containers:
         - name: jenkins
@@ -29,16 +27,24 @@ spec:
               memory: 256Mi
             limits:
               cpu: 1000m
-              memory: 512Mi
+              memory: 768Mi
           volumeMounts:
             - mountPath: /var/jenkins_home
               name: jenkins-pvc
+      initContainers:
+        - name: fix-permissions
+          image: tubetrue01/busybox:1.27
+          command: ["sh", "-c", "chown -R 1000:1000 /var/jenkins_home"]
+          securityContext:
+            privileged: true
+          volumeMounts:
+            - name: jenkins-pvc
+              mountPath: /var/jenkins_home
   volumeClaimTemplates:
     - metadata:
         name: jenkins-pvc
         labels:
           app: jenkins
-        namespace: zpf
       spec:
         accessModes: [ "ReadWriteMany" ]
         resources:
@@ -51,7 +57,6 @@ metadata:
   name: jenkins
   labels:
     app: jenkins
-  namespace: zpf
 spec:
   clusterIP: None
   selector:
