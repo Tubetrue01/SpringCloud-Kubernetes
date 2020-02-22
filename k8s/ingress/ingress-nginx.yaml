@@ -47,3 +47,9 @@ spec:
           - backend:
               serviceName: jenkins
               servicePort: 8080
+    - host: my.gitlab.com
+      http:
+        paths:
+          - backend:
+              serviceName: gitlab
+              servicePort: 80
