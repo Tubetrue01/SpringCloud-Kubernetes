@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: jenkins
-          image: tubetrue01/jenkins:2.60.3
+          image: tubetrue01/jenkins:lts-2.204.3
           ports:
             - containerPort: 8080
             - containerPort: 50000
