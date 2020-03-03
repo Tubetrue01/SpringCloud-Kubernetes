@@ -7,7 +7,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>${spring-boot.version}</version>
+        <version>2.2.4.RELEASE</version>
         <relativePath/>
     </parent>
 
@@ -17,8 +17,8 @@
     <packaging>pom</packaging>
 
     <properties>
-        <javspring-cloud.versiona.version>11</javspring-cloud.versiona.version>
-        <spring-cloud.version>Hoxton.SR1</spring-cloud.version>
+        <java.version>11</java.version>
+        <spring-cloud.version>Hoxton.SR2</spring-cloud.version>
         <spring-boot.version>2.2.4.RELEASE</spring-boot.version>
         <log4j.web.version>2.13.0</log4j.web.version>
         <mybatis.version>2.1.1</mybatis.version>
@@ -33,14 +33,10 @@
         <module>gateway</module>
         <module>common</module>
         <module>admin</module>
+        <module>turbine-dashboard</module>
     </modules>
 
     <dependencies>
-        <!-- Actuator -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-actuator</artifactId>
-        </dependency>
 
         <!-- EurekaClient -->
         <dependency>
@@ -83,6 +79,7 @@
 
     <dependencyManagement>
         <dependencies>
+
             <!-- Admin -->
             <dependency>
                 <groupId>de.codecentric</groupId>

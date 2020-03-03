@@ -1,7 +1,5 @@
 server:
   port: 7070
-  servlet:
-    context-path: /userconsumer
 spring:
   application:
     name: user-consumer
@@ -9,6 +7,11 @@ spring:
     loadbalancer:
       ribbon:
         enabled: false
+  rabbitmq:
+    host: 192.168.0.201
+    port: 32567
+    username: guest
+    password: guest
 eureka:
   instance:
     hostname: localhost
@@ -19,12 +22,12 @@ eureka:
     service-url:
       defaultZone: http://localhost:9090/eureka
 management:
-  server:
-    port: 7071
   endpoints:
     web:
       exposure:
         include: "*"
+  server:
+    port: 7071
 feign:
   hystrix:
     enabled: true

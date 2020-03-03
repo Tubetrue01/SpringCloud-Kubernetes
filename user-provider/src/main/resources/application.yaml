@@ -1,7 +1,5 @@
 server:
   port: 8080
-  servlet:
-    context-path: /userprovider
 spring:
   application:
     name: user-provider

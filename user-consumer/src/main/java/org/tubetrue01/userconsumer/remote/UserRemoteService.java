@@ -19,7 +19,7 @@ import java.util.List;
  * Description :
  */
 @Primary
-@FeignClient(name = "user-provider", path = "/userprovider/user", fallback = UserRemoteFallbackService.class)
+@FeignClient(name = "user-provider", path = "/user", fallback = UserRemoteFallbackService.class)
 public interface UserRemoteService {
 
     @GetMapping("/info")

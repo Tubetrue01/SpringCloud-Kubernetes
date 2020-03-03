@@ -13,6 +13,12 @@
 	<name>UserProvider</name>
 
 	<dependencies>
+		<!-- Actuator -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
+
 		<!-- JDBC -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

@@ -1,0 +1,20 @@
+server:
+  port: 2020
+spring:
+  application:
+    name: turbine-dashboard
+  rabbitmq:
+    host: 192.168.0.201
+    username: guest
+    password: guest
+    port: 32567
+eureka:
+  instance:
+    appname: turbine-dashboard
+    hostname: localhost
+  client:
+    service-url:
+      defaultZone: http://localhost:9090/eureka
+turbine:
+  stream:
+    destination: hystrixStreamOutput
