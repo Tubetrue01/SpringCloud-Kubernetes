@@ -7,7 +7,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.2.4.RELEASE</version>
+        <version>${spring-boot.version}</version>
         <relativePath/>
     </parent>
 
@@ -17,21 +17,12 @@
     <packaging>pom</packaging>
 
     <properties>
-        <java.version>11</java.version>
+        <javspring-cloud.versiona.version>11</javspring-cloud.versiona.version>
         <spring-cloud.version>Hoxton.SR1</spring-cloud.version>
-        <eureka-server.version>2.2.1.RELEASE</eureka-server.version>
-        <eureka-client.version>2.2.1.RELEASE</eureka-client.version>
-        <spring-web.version>2.2.4.RELEASE</spring-web.version>
-        <spring-actuator.version>2.2.4.RELEASE</spring-actuator.version>
-        <log4j.version>2.2.4.RELEASE</log4j.version>
+        <spring-boot.version>2.2.4.RELEASE</spring-boot.version>
         <log4j.web.version>2.13.0</log4j.web.version>
         <mybatis.version>2.1.1</mybatis.version>
-        <openfeign.version>2.1.1.RELEASE</openfeign.version>
-        <gateway.version>2.1.1.RELEASE</gateway.version>
         <common.version>v1.0.0</common.version>
-        <lombok.version>1.18.10</lombok.version>
-        <mysql.version>8.0.19</mysql.version>
-        <jdbc.version>2.2.4.RELEASE</jdbc.version>
         <spring-boot-admin.version>2.2.2</spring-boot-admin.version>
     </properties>
 
@@ -49,21 +40,18 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
-            <version>${spring-actuator.version}</version>
         </dependency>
 
         <!-- EurekaClient -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
-            <version>${eureka-client.version}</version>
         </dependency>
 
         <!-- Lombok -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>${lombok.version}</version>
             <scope>provided</scope>
         </dependency>
 
@@ -71,7 +59,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-log4j2</artifactId>
-            <version>${log4j.version}</version>
         </dependency>
 
         <!-- Log4j web -->
@@ -103,41 +90,6 @@
                 <version>${spring-boot-admin.version}</version>
             </dependency>
 
-            <!-- Gateway -->
-            <dependency>
-                <groupId>org.springframework.cloud</groupId>
-                <artifactId>spring-cloud-starter-gateway</artifactId>
-                <version>${gateway.version}</version>
-            </dependency>
-
-            <!-- OpenFeign -->
-            <dependency>
-                <groupId>org.springframework.cloud</groupId>
-                <artifactId>spring-cloud-starter-openfeign</artifactId>
-                <version>${openfeign.version}</version>
-            </dependency>
-
-            <!-- JDBC -->
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-starter-jdbc</artifactId>
-                <version>${jdbc.version}</version>
-            </dependency>
-
-            <!-- MySQL -->
-            <dependency>
-                <groupId>mysql</groupId>
-                <artifactId>mysql-connector-java</artifactId>
-                <version>${mysql.version}</version>
-            </dependency>
-
-            <!-- Mybatis -->
-            <dependency>
-                <groupId>org.mybatis.spring.boot</groupId>
-                <artifactId>mybatis-spring-boot-starter</artifactId>
-                <version>${mybatis.version}</version>
-            </dependency>
-
             <!-- Common -->
             <dependency>
                 <groupId>org.tubetrue01</groupId>
@@ -145,25 +97,27 @@
                 <version>${common.version}</version>
             </dependency>
 
-            <!-- Web -->
+            <!-- Mybatis-->
             <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-starter-web</artifactId>
-                <version>${spring-web.version}</version>
+                <groupId>org.mybatis.spring.boot</groupId>
+                <artifactId>mybatis-spring-boot-starter</artifactId>
+                <version>${mybatis.version}</version>
             </dependency>
 
-            <!-- EurekaServer -->
-            <dependency>
-                <groupId>org.springframework.cloud</groupId>
-                <artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
-                <version>${eureka-server.version}</version>
-            </dependency>
-
-            <!-- SpringCloud -->
+            <!-- SpringCloud Dependency-->
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-dependencies</artifactId>
                 <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <!-- SpringBoot Dependency-->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring-boot.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
