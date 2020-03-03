@@ -4,9 +4,22 @@ spring:
   application:
     name: user-provider
   datasource:
-       url: jdbc:mysql://192.168.0.112:3306/test?allowMultiQueries=true&serverTimezone=Asia/Shanghai&useSSL=false&autoReconnect=true&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull
-       password: root
-       username: root
+    url: jdbc:mysql://192.168.0.112:3306/test?allowMultiQueries=true&serverTimezone=Asia/Shanghai&useSSL=false&autoReconnect=true&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull
+    password: root
+    username: root
+  sleuth:
+    sampler:
+      probability: 1.0
+  rabbitmq:
+    host: 192.168.0.201
+    port: 32567
+    username: guest
+    password: guest
+  zipkin:
+    rabbitmq:
+      queue: zipkin
+    sender:
+      type: rabbit
 mybatis:
   type-aliases-package: org.tubetrue01.pojo
   configuration:

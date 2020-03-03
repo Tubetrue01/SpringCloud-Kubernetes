@@ -17,6 +17,12 @@
     </properties>
 
     <dependencies>
+        <!-- Sleuth Zipkin Start-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-zipkin</artifactId>
+        </dependency>
+
         <!-- Actuator -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

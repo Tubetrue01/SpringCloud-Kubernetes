@@ -14,6 +14,20 @@ spring:
     loadbalancer:
       ribbon:
         enabled: false
+
+  sleuth:
+    sampler:
+      probability: 1.0
+  rabbitmq:
+    host: 192.168.0.201
+    username: guest
+    password: guest
+    port: 32567
+  zipkin:
+    rabbitmq:
+      queue: zipkin
+    sender:
+      type: rabbit
 eureka:
   instance:
     appname: gateway
