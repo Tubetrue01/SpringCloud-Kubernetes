@@ -4,6 +4,7 @@ metadata:
   name: gitlab
   labels:
     app: gitlab
+  namespace: zpf
 spec:
   replicas: 1
   selector:
@@ -29,7 +30,7 @@ spec:
               memory: 512Mi
             limits:
               cpu: 1000m
-              memory: 2048Mi
+              memory: 3072Mi
           volumeMounts:
             - mountPath: /var/opt/gitlab
               name: gitlab-pvc
@@ -50,6 +51,7 @@ metadata:
   name: gitlab
   labels:
     app: gitlab
+  namespace: zpf
 spec:
   selector:
     app: gitlab
@@ -64,6 +66,7 @@ metadata:
   name: gitlab
   labels:
     app: gitlab
+  namespace: zpf
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
@@ -96,3 +99,4 @@ roleRef:
 subjects:
   - kind: ServiceAccount
     name: gitlab
+    namespace: zpf
