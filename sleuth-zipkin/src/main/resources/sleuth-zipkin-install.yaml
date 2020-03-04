@@ -1,0 +1,103 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: sleuth-zipkin
+  labels:
+    app: sleuth-zipkin
+  namespace: zpf
+spec:
+  ports:
+    - port: 3030
+      name: server
+      targetPort: 3030
+    - port: 3031
+      name: management
+      targetPort: 3031
+  selector:
+    app: sleuth-zipkin
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sleuth-zipkin
+  labels:
+    app: sleuth-zipkin
+  namespace: zpf
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sleuth-zipkin
+  template:
+    metadata:
+      labels:
+        app: sleuth-zipkin
+    spec:
+      containers:
+        - name: sleuth-zipkin
+          image: tubetrue01/sleuth-zipkin:v1
+          ports:
+            - containerPort: 3030
+              name: server
+            - containerPort: 3031
+              name: management
+          env:
+            - name: APP_NAME
+              value: "sleuth-zipkin"
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: POD_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP
+            - name: APP_OPTS
+              value: "
+                     --spring.rabbitmq.host=rabbitmq
+                     --spring.rabbitmq.username=guest
+                     --spring.rabbitmq.password=guest
+                     --spring.rabbitmq.port=5672
+                     --spring.application.name=${APP_NAME}
+                     --eureka.instance.appname=${APP_NAME}
+                     --eureka.instance.hostname=${POD_NAME}.${APP_NAME}
+                     --registerWithEureka=true
+                     --fetchRegistry=true
+                     --eureka.instance.preferIpAddress=true
+                     --eureka.client.service-url.defaultZone=http://eureka-server-0.eureka-server:9090/eureka,http://eureka-server-1.eureka-server:9090/eureka
+                     "
+          resources:
+            limits:
+              cpu: 1000m
+              memory: 300Mi
+            requests:
+              cpu: 100m
+              memory: 200Mi
+          readinessProbe:
+            initialDelaySeconds: 20
+            periodSeconds: 5
+            timeoutSeconds: 10
+            failureThreshold: 5
+            httpGet:
+              path: /actuator/health
+              port: 3031
+          livenessProbe:
+            initialDelaySeconds: 60
+            periodSeconds: 5
+            timeoutSeconds: 5
+            failureThreshold: 3
+            httpGet:
+              path: /actuator/health
+              port: 3031
+          lifecycle:
+            preStop:
+              httpGet:
+                port: 3030
+                path: /eureka/offline
+          volumeMounts:
+            - mountPath: /var/log/springcloud/sleuth-zipkin
+              name: log-path
+      volumes:
+        - name: log-path
+          hostPath:
+            path: /var/log/springcloud/sleuth-zipkin
