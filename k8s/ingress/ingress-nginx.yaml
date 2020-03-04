@@ -4,6 +4,7 @@ metadata:
   name: nginx-ingress
   annotations:
     kubernetes.io/ingress.class: "nginx"
+  namespace: zpf
 spec:
   rules:
     - host: my.eureka.com
@@ -53,3 +54,15 @@ spec:
           - backend:
               serviceName: gitlab
               servicePort: 80
+    - host: my.turbine.com
+      http:
+        paths:
+          - backend:
+              serviceName: turbine-dashboard
+              servicePort: 2020
+    - host: my.zipkin.com
+      http:
+        paths:
+          - backend:
+              serviceName: sleuth-zipkin
+              servicePort: 3030
