@@ -7,6 +7,10 @@ spring:
     loadbalancer:
       ribbon:
         enabled: false
+    stream:
+      bindings:
+        hystrixStreamOutput:
+          destination: turbine
   sleuth:
     sampler:
       probability: 1.0
@@ -20,6 +24,7 @@ spring:
       queue: zipkin
     sender:
       type: rabbit
+
 eureka:
   instance:
     hostname: localhost

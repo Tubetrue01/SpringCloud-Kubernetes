@@ -38,6 +38,11 @@
     </modules>
 
     <dependencies>
+        <!-- Actuator -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
 
         <!-- EurekaClient -->
         <dependency>
@@ -73,6 +78,10 @@
                 <exclusion>
                     <groupId>org.springframework.boot</groupId>
                     <artifactId>spring-boot-starter-logging</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.springframe.boot</groupId>
+                    <artifactId>spring-boot-starter-actuator</artifactId>
                 </exclusion>
             </exclusions>
         </dependency>

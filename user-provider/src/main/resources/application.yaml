@@ -20,6 +20,11 @@ spring:
       queue: zipkin
     sender:
       type: rabbit
+  cloud:
+    stream:
+      bindings:
+        hystrixStreamOutput:
+          destination: turbine
 mybatis:
   type-aliases-package: org.tubetrue01.pojo
   configuration:
