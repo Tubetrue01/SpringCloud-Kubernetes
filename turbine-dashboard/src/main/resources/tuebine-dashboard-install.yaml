@@ -1,0 +1,98 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: turbine-dashboard
+  labels:
+    app: turbine-dashboard
+  namespace: zpf
+spec:
+  ports:
+    - port: 2020
+      name: server
+      targetPort: 2020
+  selector:
+    app: turbine-dashboard
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: turbine-dashboard
+  labels:
+    app: turbine-dashboard
+  namespace: zpf
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: turbine-dashboard
+  template:
+    metadata:
+      labels:
+        app: turbine-dashboard
+    spec:
+      containers:
+        - name: turbine-dashboard
+          image: tubetrue01/turbine-dashboard:v1
+          ports:
+            - containerPort: 2020
+              name: server
+          env:
+            - name: APP_NAME
+              value: "turbine-dashboard"
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: POD_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP
+            - name: APP_OPTS
+              value: "
+                     --spring.rabbitmq.host=rabbitmq
+                     --spring.rabbitmq.username=guest
+                     --spring.rabbitmq.password=guest
+                     --spring.rabbitmq.port=5672
+                     --spring.application.name=${APP_NAME}
+                     --eureka.instance.appname=${APP_NAME}
+                     --eureka.instance.hostname=${POD_NAME}.${APP_NAME}
+                     --registerWithEureka=true
+                     --fetchRegistry=true
+                     --eureka.instance.preferIpAddress=true
+                     --eureka.client.service-url.defaultZone=http://eureka-server-0.eureka-server:9090/eureka,http://eureka-server-1.eureka-server:9090/eureka
+                     "
+          resources:
+            limits:
+              cpu: 1000m
+              memory: 300Mi
+            requests:
+              cpu: 100m
+              memory: 200Mi
+          readinessProbe:
+            initialDelaySeconds: 20
+            periodSeconds: 5
+            timeoutSeconds: 10
+            failureThreshold: 5
+            httpGet:
+              path: /actuator/health
+              port: 2021
+          livenessProbe:
+            initialDelaySeconds: 60
+            periodSeconds: 5
+            timeoutSeconds: 5
+            failureThreshold: 3
+            httpGet:
+              path: /actuator/health
+              port: 2021
+          lifecycle:
+            preStop:
+              httpGet:
+                port: 2020
+                path: /eureka/offline
+          volumeMounts:
+            - mountPath: /var/log/springcloud/turbine-dashboard
+              name: log-path
+      volumes:
+        - name: log-path
+          hostPath:
+            path: /var/log/springcloud/turbine-dashboard
