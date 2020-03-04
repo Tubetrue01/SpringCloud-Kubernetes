@@ -4,6 +4,7 @@ metadata:
   name: eureka-server
   labels:
     app: eureka-server
+  namespace: zpf
 spec:
   clusterIP: None
   ports:
@@ -22,6 +23,7 @@ metadata:
   name: eureka-server
   labels:
     app: eureka-sever
+  namespace: zpf
 spec:
   serviceName: eureka-server
   replicas: 2
@@ -66,7 +68,7 @@ spec:
           resources:
             limits:
               cpu: 1000m
-              memory: 252Mi
+              memory: 512Mi
             requests:
               cpu: 100m
               memory: 200Mi

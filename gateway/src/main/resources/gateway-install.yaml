@@ -4,6 +4,7 @@ metadata:
   name: gateway
   labels:
     app: gateway
+  namespace: zpf
 spec:
   ports:
     - port: 5050
@@ -21,6 +22,7 @@ metadata:
   name: gateway
   labels:
     app: gateway
+  namespace: zpf
 spec:
   replicas: 1
   selector:
@@ -33,7 +35,7 @@ spec:
     spec:
       containers:
         - name: gateway
-          image: tubetrue01/gateway:v1
+          image: tubetrue01/gateway:v2
           ports:
             - containerPort: 5050
               name: server
@@ -52,6 +54,10 @@ spec:
                   fieldPath: status.podIP
             - name: APP_OPTS
               value: "
+                     --spring.rabbitmq.host=rabbitmq
+                     --spring.rabbitmq.username=guest
+                     --spring.rabbitmq.password=guest
+                     --spring.rabbitmq.port=5672
                      --spring.application.name=${APP_NAME}
                      --eureka.instance.appname=${APP_NAME}
                      --eureka.instance.hostname=${POD_NAME}.${APP_NAME}
@@ -63,7 +69,7 @@ spec:
           resources:
             limits:
               cpu: 1000m
-              memory: 252Mi
+              memory: 400Mi
             requests:
               cpu: 100m
               memory: 200Mi

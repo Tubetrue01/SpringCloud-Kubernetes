@@ -4,6 +4,7 @@ metadata:
   name: admin
   labels:
     app: admin
+  namespace: zpf
 spec:
   ports:
     - port: 1010
@@ -21,6 +22,7 @@ metadata:
   name: admin
   labels:
     app: admin
+  namespace: zpf
 spec:
   replicas: 1
   selector:

@@ -1,27 +1,10 @@
-#
-#apiVersion: v1
-#kind: Service
-#metadata:
-#  name: user-provider
-#  labels:
-#    app: user-provider
-#spec:
-#  ports:
-#    - port: 8080
-#      name: server
-#      targetPort: 8080
-#    - port: 8081
-#      name: management
-#      targetPort: 8081
-#  selector:
-#    app: user-provider
-#---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: user-provider
   labels:
     app: user-provider
+  namespace: zpf
 spec:
   replicas: 1
   selector:
@@ -34,7 +17,7 @@ spec:
     spec:
       containers:
         - name: user-provider
-          image: tubetrue01/user-provider:v1
+          image: tubetrue01/user-provider:v2
           ports:
             - containerPort: 8080
               name: server
@@ -53,6 +36,10 @@ spec:
                   fieldPath: status.podIP
             - name: APP_OPTS
               value: "
+                     --spring.rabbitmq.host=rabbitmq
+                     --spring.rabbitmq.username=guest
+                     --spring.rabbitmq.password=guest
+                     --spring.rabbitmq.port=5672
                      --spring.application.name=${APP_NAME}
                      --eureka.instance.appname=${APP_NAME}
                      --eureka.instance.hostname=${POD_NAME}.${APP_NAME}
@@ -64,7 +51,7 @@ spec:
           resources:
             limits:
               cpu: 1000m
-              memory: 252Mi
+              memory: 500Mi
             requests:
               cpu: 100m
               memory: 200Mi
