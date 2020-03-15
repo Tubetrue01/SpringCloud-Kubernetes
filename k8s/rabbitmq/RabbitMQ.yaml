@@ -4,6 +4,7 @@ metadata:
   name: rabbitmq
   labels:
     app: rabbitmq
+  namespace: zpf
 spec:
   selector:
     matchLabels:
@@ -35,6 +36,7 @@ metadata:
   name: rabbitmq
   labels:
     app: rabbitmq
+  namespace: zpf
 spec:
   selector:
     app: rabbitmq
