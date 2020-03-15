@@ -7,10 +7,23 @@ spring:
     name: gateway
   cloud:
     gateway:
-      discovery:
-        locator:
-          enabled: true
-          lower-case-service-id: true
+      routes:
+        - id: consumer
+          uri: lb://user-consumer
+          predicates:
+            - Path=/consumer/**
+          filters:
+            - name: RequestRateLimiter
+              args:
+                key-resolver: '#{@hostAddrKeyResolver}'
+                redis-rate-limiter.replenishRate: 1
+                redis-rate-limiter.burstCapacity: 3
+
+    #      discovery:
+    #        locator:
+    #          enabled: true
+    #          lower-case-service-id: true
+    #          include-expression: serviceId.endsWith('CONSUMER')
     loadbalancer:
       ribbon:
         enabled: false
@@ -28,6 +41,10 @@ spring:
       queue: zipkin
     sender:
       type: rabbit
+  redis:
+    host: 192.168.0.201
+    port: 31379
+
 eureka:
   instance:
     appname: gateway
