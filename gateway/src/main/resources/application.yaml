@@ -18,6 +18,14 @@ spring:
                 key-resolver: '#{@hostAddrKeyResolver}'
                 redis-rate-limiter.replenishRate: 1
                 redis-rate-limiter.burstCapacity: 3
+            - name: Hystrix
+              args:
+                name: fallbackForward
+                fallbackUri: forward:/gateway/fallback
+    stream:
+      bindings:
+        hystrixStreamOutput:
+          destination: turbine
 
     #      discovery:
     #        locator:
@@ -62,3 +70,10 @@ management:
         include: "*"
   server:
     port: 5051
+hystrix:
+  command:
+    fallbackForward:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 7000

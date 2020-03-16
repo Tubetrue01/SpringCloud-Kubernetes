@@ -23,12 +23,6 @@
             <artifactId>spring-cloud-starter-zipkin</artifactId>
         </dependency>
 
-        <!-- Hystrix -->
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
-        </dependency>
-
         <!-- Hystrix-Stream -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
