@@ -53,3 +53,6 @@ hystrix:
         isolation:
           thread:
             timeoutInMilliseconds: 6000
+  stream:
+    queue:
+      send-id: false
