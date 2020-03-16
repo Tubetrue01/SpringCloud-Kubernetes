@@ -13,15 +13,21 @@ spring:
           predicates:
             - Path=/consumer/**
           filters:
-            - name: RequestRateLimiter
-              args:
-                key-resolver: '#{@hostAddrKeyResolver}'
-                redis-rate-limiter.replenishRate: 1
-                redis-rate-limiter.burstCapacity: 3
             - name: Hystrix
               args:
                 name: fallbackForward
                 fallbackUri: forward:/gateway/fallback
+      default-filters:
+        - name: RequestRateLimiter
+          args:
+            key-resolver: '#{@hostAddrKeyResolver}'
+            redis-rate-limiter.replenishRate: 1
+            redis-rate-limiter.burstCapacity: 3
+        - name: Retry
+          args:
+            retries: 3
+      httpclient:
+        response-timeout: 2s
     stream:
       bindings:
         hystrixStreamOutput:
