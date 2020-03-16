@@ -12,10 +12,6 @@
     <name>UserConsumer</name>
     <packaging>jar</packaging>
 
-    <properties>
-        <java.version>11</java.version>
-    </properties>
-
     <dependencies>
         <!-- Sleuth Zipkin Start-->
         <dependency>
