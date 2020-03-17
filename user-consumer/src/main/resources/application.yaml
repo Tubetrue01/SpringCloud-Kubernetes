@@ -5,6 +5,10 @@ server:
 spring:
   application:
     name: user-consumer
+  security:
+    user:
+      name: root
+      password: root
   cloud:
     loadbalancer:
       ribbon:
@@ -26,7 +30,11 @@ spring:
       queue: zipkin
     sender:
       type: rabbit
-
+  boot:
+    admin:
+      client:
+        username: root
+        password: root
 eureka:
   instance:
     hostname: localhost
@@ -35,7 +43,8 @@ eureka:
     fetch-registry: true
     register-with-eureka: true
     service-url:
-      defaultZone: http://localhost:9090/eureka
+      defaultZone: http://root:root@localhost:9090/eureka/
+
 management:
   endpoints:
     web:
@@ -55,4 +64,4 @@ hystrix:
             timeoutInMilliseconds: 6000
   stream:
     queue:
-      send-id: false
+      send-id: false  # Set it false to avoid turbine can only find one host
