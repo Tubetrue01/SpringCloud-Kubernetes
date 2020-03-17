@@ -1,6 +1,4 @@
 #spring:
-#  application:
-#    name: gateway
 #  cloud:
 #    gateway:
 #      routes:
@@ -8,13 +6,12 @@
 #          uri: lb://user-consumer
 #          predicates:
 #            - Path=/consumer/**
-#            - Weight=test,50
-#
+#            - Weight=test,100
 #        - id: test_2
 #          uri: lb://user-provider
 #          predicates:
 #            - Path=/provider/**
-#            - Weight=test,50
+#            - Weight=test,0
 #
 #      default-filters:
 #        - name: Hystrix
@@ -25,16 +22,12 @@
 #          args:
 #            key-resolver: '#{@hostAddrKeyResolver}'
 #            redis-rate-limiter.replenishRate: 1
-#            redis-rate-limiter.burstCapacity: 3
+#            redis-rate-limiter.burstCapacity: 10
 #        - name: Retry
 #          args:
 #            retries: 3
 #      httpclient:
 #        response-timeout: 2s
-#    stream:
-#      bindings:
-#        hystrixStreamOutput:
-#          destination: turbine
 #
 #    #      discovery:
 #    #        locator:
