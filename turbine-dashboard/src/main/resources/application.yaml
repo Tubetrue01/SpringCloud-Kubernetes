@@ -3,6 +3,10 @@ server:
 spring:
   application:
     name: turbine-dashboard
+  security:
+    user:
+      name: root
+      password: root
   rabbitmq:
     host: 192.168.0.201
     username: guest
@@ -19,7 +23,7 @@ eureka:
     hostname: localhost
   client:
     service-url:
-      defaultZone: http://localhost:9090/eureka
+      defaultZone: http://root:root@localhost:9090/eureka
 management:
   server:
     port: 2021

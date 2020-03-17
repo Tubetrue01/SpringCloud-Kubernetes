@@ -3,6 +3,10 @@ server:
 spring:
   application:
     name: sleuth-zipkin
+  security:
+    user:
+      name: root
+      password: root
 
 zipkin:
   collector:
