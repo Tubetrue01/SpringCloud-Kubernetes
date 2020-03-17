@@ -34,3 +34,4 @@ management:
     web:
       exposure:
         include: "*"
+# You need to use http://username:password@localhost:2020 to access hystrix stream;
