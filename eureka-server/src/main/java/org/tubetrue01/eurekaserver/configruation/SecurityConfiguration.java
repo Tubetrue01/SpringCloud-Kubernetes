@@ -1,4 +1,4 @@
-package org.tubetrue01.userprovider.configuration;
+package org.tubetrue01.eurekaserver.configruation;
 
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -17,6 +17,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable();
+        http.csrf().ignoringAntMatchers("/eureka/**");
+        super.configure(http);
     }
 }

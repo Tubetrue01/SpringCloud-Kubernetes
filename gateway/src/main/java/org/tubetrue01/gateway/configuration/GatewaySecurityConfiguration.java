@@ -10,7 +10,7 @@ import org.springframework.security.web.server.SecurityWebFilterChain;
  * User : Pengfei Zhang
  * Mail : Tubetrue01@gmail.com
  * Date : 2020/3/17
- * Time : 4:27 下午
+ * Time : 9:24 下午
  * Description :
  */
 @EnableWebFluxSecurity
@@ -18,6 +18,15 @@ public class GatewaySecurityConfiguration {
 
     @Bean
     public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http) {
-        return http.csrf().disable().build();
+
+        return http.authorizeExchange()
+                .pathMatchers("/actuator/**")
+                .authenticated()
+                .and()
+                .authorizeExchange()
+                .anyExchange().permitAll()
+                .and()
+                .formLogin().and().httpBasic().and().build();
     }
+
 }

@@ -11,6 +11,9 @@ eureka:
    instance:
      hostname: localhost
      appname: eureka-server
+     metadata-map:
+       user.name: ${spring.security.user.name}
+       user.password: ${spring.security.user.password}
    client:
      fetch-registry: false
      register-with-eureka: false

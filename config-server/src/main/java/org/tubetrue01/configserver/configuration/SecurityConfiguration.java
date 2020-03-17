@@ -9,7 +9,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
  * User : Pengfei Zhang
  * Mail : Tubetrue01@gmail.com
  * Date : 2020/3/17
- * Time : 4:27 下午
+ * Time : 10:21 下午
  * Description :
  */
 @EnableWebSecurity
@@ -17,6 +17,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable();
+        http.csrf().ignoringAntMatchers("/monitor/**");
     }
 }

@@ -16,6 +16,8 @@ spring:
         service-id: config-server
       name: gateway
       profile: dev
+      username: root     # Username of security
+      password: root     # Password of security
 
     bus:
       id: ${spring.application.name}:${spring.cloud.config.profile}:${random.value}  # Enable support for refresh by bus
@@ -52,10 +54,13 @@ eureka:
     serviceUrl:
       register-with-eureka: true
       fetch-registry: true
-      defaultZone: http://root:root@localhost:9090/eureka/
+      defaultZone: http://root:root@localhost:9090/eureka
   instance:
     hostname: localhost
     appname: gateway
+    metadata-map:
+      user.name: ${spring.security.user.name}
+      user.password: ${spring.security.user.password}
 
 management:
   endpoints:

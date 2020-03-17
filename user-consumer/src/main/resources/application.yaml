@@ -30,15 +30,13 @@ spring:
       queue: zipkin
     sender:
       type: rabbit
-  boot:
-    admin:
-      client:
-        username: root
-        password: root
 eureka:
   instance:
     hostname: localhost
     appname: user-consumer
+    metadata-map:
+      user.name: ${spring.security.user.name}
+      user.password: ${spring.security.user.password}
   client:
     fetch-registry: true
     register-with-eureka: true

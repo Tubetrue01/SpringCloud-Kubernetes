@@ -21,6 +21,9 @@ eureka:
   instance:
     appname: turbine-dashboard
     hostname: localhost
+    metadata-map:
+      user.name: ${spring.security.user.name}
+      user.password: ${spring.security.user.password}
   client:
     service-url:
       defaultZone: http://root:root@localhost:9090/eureka
