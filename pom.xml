@@ -35,6 +35,7 @@
         <module>admin</module>
         <module>turbine-dashboard</module>
         <module>sleuth-zipkin</module>
+        <module>config-server</module>
     </modules>
 
     <dependencies>
