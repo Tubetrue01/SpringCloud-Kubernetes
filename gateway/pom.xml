@@ -12,6 +12,12 @@
 	<name>Gateway</name>
 
 	<dependencies>
+		<!-- Config Client-->
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-config-client</artifactId>
+		</dependency>
+
 		<!-- Hystrix-Stream -->
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
@@ -24,16 +30,19 @@
 			<artifactId>spring-cloud-starter-zipkin</artifactId>
 		</dependency>
 
+		<!-- Bus AMQP -->
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-stream-rabbit</artifactId>
+			<artifactId>spring-cloud-starter-bus-amqp</artifactId>
 		</dependency>
 
+		<!-- Hystrix Supports -->
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
 		</dependency>
 
+		<!-- Limit Redis -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-redis-reactive</artifactId>

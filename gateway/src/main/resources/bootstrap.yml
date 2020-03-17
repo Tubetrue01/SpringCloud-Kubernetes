@@ -1,0 +1,62 @@
+server:
+  port: 5050
+  servlet:
+    context-path: /
+spring:
+  application:
+    name: gateway
+  cloud:
+    config:
+      discovery:
+        enabled: true
+        service-id: config-server
+      name: gateway
+      profile: dev
+
+    bus:
+      id: ${spring.application.name}:${spring.cloud.config.profile}:${random.value}
+
+    loadbalancer:
+      ribbon:
+        enabled: false
+
+    stream:
+      bindings:
+        hystrixStreamOutput:
+          destination: turbine
+  sleuth:
+    sampler:
+      probability: 1.0
+
+  rabbitmq:
+    host: 192.168.0.201
+    username: guest
+    password: guest
+    port: 32567
+
+  zipkin:
+    rabbitmq:
+      queue: zipkin
+    sender:
+      type: rabbit
+  redis:
+    host: 192.168.0.201
+    port: 31379
+
+eureka:
+  client:
+    serviceUrl:
+      register-with-eureka: true
+      fetch-registry: true
+      defaultZone: http://localhost:9090/eureka/
+  instance:
+    hostname: localhost
+    appname: gateway
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "health"
+  server:
+    port: 5051

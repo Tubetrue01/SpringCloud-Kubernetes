@@ -1,85 +1,50 @@
-server:
-  port: 5050
-  servlet:
-    context-path: /
-spring:
-  application:
-    name: gateway
-  cloud:
-    gateway:
-      routes:
-        - id: consumer
-          uri: lb://user-consumer
-          predicates:
-            - Path=/consumer/**
-          filters:
-            - name: Hystrix
-              args:
-                name: fallbackForward
-                fallbackUri: forward:/gateway/fallback
-      default-filters:
-        - name: RequestRateLimiter
-          args:
-            key-resolver: '#{@hostAddrKeyResolver}'
-            redis-rate-limiter.replenishRate: 1
-            redis-rate-limiter.burstCapacity: 3
-        - name: Retry
-          args:
-            retries: 3
-      httpclient:
-        response-timeout: 2s
-    stream:
-      bindings:
-        hystrixStreamOutput:
-          destination: turbine
-
-    #      discovery:
-    #        locator:
-    #          enabled: true
-    #          lower-case-service-id: true
-    #          include-expression: serviceId.endsWith('CONSUMER')
-    loadbalancer:
-      ribbon:
-        enabled: false
-
-  sleuth:
-    sampler:
-      probability: 1.0
-  rabbitmq:
-    host: 192.168.0.201
-    username: guest
-    password: guest
-    port: 32567
-  zipkin:
-    rabbitmq:
-      queue: zipkin
-    sender:
-      type: rabbit
-  redis:
-    host: 192.168.0.201
-    port: 31379
-
-eureka:
-  instance:
-    appname: gateway
-    hostname: localhost
-    prefer-ip-address: true
-  client:
-    fetch-registry: true
-    register-with-eureka: true
-    service-url:
-      defaultZone: http://localhost:9090/eureka
-management:
-  endpoints:
-    web:
-      exposure:
-        include: "*"
-  server:
-    port: 5051
-hystrix:
-  command:
-    fallbackForward:
-      execution:
-        isolation:
-          thread:
-            timeoutInMilliseconds: 7000
+#spring:
+#  application:
+#    name: gateway
+#  cloud:
+#    gateway:
+#      routes:
+#        - id: test_1
+#          uri: lb://user-consumer
+#          predicates:
+#            - Path=/consumer/**
+#            - Weight=test,50
+#
+#        - id: test_2
+#          uri: lb://user-provider
+#          predicates:
+#            - Path=/provider/**
+#            - Weight=test,50
+#
+#      default-filters:
+#        - name: Hystrix
+#          args:
+#            name: fallbackForeward
+#            fallbackUri: forward:/gateway/fallback
+#        - name: RequestRateLimiter
+#          args:
+#            key-resolver: '#{@hostAddrKeyResolver}'
+#            redis-rate-limiter.replenishRate: 1
+#            redis-rate-limiter.burstCapacity: 3
+#        - name: Retry
+#          args:
+#            retries: 3
+#      httpclient:
+#        response-timeout: 2s
+#    stream:
+#      bindings:
+#        hystrixStreamOutput:
+#          destination: turbine
+#
+#    #      discovery:
+#    #        locator:
+#    #          enabled: true
+#    #          lower-case-service-id: true
+#    #          include-expression: serviceId.endsWith('CONSUMER')
+#hystrix:
+#  command:
+#    fallbackForward:
+#      execution:
+#        isolation:
+#          thread:
+#            timeoutInMilliseconds:7000
