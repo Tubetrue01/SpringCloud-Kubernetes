@@ -5,6 +5,10 @@ server:
 spring:
   application:
     name: gateway
+  security:
+    user:
+      name: root
+      password: root
   cloud:
     config:
       discovery:
@@ -14,7 +18,7 @@ spring:
       profile: dev
 
     bus:
-      id: ${spring.application.name}:${spring.cloud.config.profile}:${random.value}
+      id: ${spring.application.name}:${spring.cloud.config.profile}:${random.value}  # Enable support for refresh by bus
 
     loadbalancer:
       ribbon:
@@ -48,7 +52,7 @@ eureka:
     serviceUrl:
       register-with-eureka: true
       fetch-registry: true
-      defaultZone: http://localhost:9090/eureka/
+      defaultZone: http://root:root@localhost:9090/eureka/
   instance:
     hostname: localhost
     appname: gateway
