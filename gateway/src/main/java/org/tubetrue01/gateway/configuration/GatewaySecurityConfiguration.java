@@ -21,12 +21,13 @@ public class GatewaySecurityConfiguration {
 
         return http.authorizeExchange()
                 .pathMatchers("/actuator/**")
-                .authenticated()
-                .and()
+                .authenticated().and()
                 .authorizeExchange()
-                .anyExchange().permitAll()
-                .and()
-                .formLogin().and().httpBasic().and().build();
+                .anyExchange().permitAll().and()
+                .formLogin().and()
+                .httpBasic().and()
+                .csrf().disable()
+                .build();
     }
 
 }
