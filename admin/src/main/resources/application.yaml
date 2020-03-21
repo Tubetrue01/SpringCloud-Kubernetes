@@ -19,7 +19,7 @@ eureka:
       defaultZone: http://root:root@localhost:9090/eureka
 management:
   server:
-    port: 1011
+    port: 1010
   endpoints:
     web:
       exposure:
