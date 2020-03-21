@@ -7,11 +7,6 @@ spring:
     url: jdbc:mysql://192.168.0.112:3306/test?allowMultiQueries=true&serverTimezone=Asia/Shanghai&useSSL=false&autoReconnect=true&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull
     password: root
     username: root
-  security:
-    user:
-      name: root
-      password: root
-  sleuth:
     sampler:
       probability: 1.0
   rabbitmq:
@@ -38,14 +33,11 @@ eureka:
   instance:
     hostname: localhost
     appname: user-provider
-    metadata-map:
-      user.name: ${spring.security.user.name}
-      user.password: ${spring.security.user.password}
   client:
     fetch-registry: true
     register-with-eureka: true
     service-url:
-      defaultZone: http://root:root@localhost:9090/eureka
+      defaultZone: http://localhost:9090/eureka
 management:
   endpoints:
     web:
