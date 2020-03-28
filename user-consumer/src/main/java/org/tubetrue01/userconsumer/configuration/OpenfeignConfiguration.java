@@ -26,4 +26,9 @@ public class OpenfeignConfiguration {
     public BasicAuthRequestInterceptor basicAuthRequestInterceptor() {
         return new BasicAuthRequestInterceptor(username, password);
     }
+    //
+    // @Bean
+    // public Logger.Level feignLoggerLevel() {
+    //     return Logger.Level.FULL;
+    // }
 }

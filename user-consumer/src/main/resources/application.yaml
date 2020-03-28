@@ -53,6 +53,11 @@ management:
 feign:
   hystrix:
     enabled: true
+  client:
+    config:
+      myLevel:
+        loggerLevel: FULL
+    default-config: myLevel
 hystrix:
   command:
     default:

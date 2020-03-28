@@ -27,7 +27,7 @@
     <!-- Define the logger, the appender will only take effect if the appender is defined and imported. -->
     <loggers>
         <!-- Create a default root logger -->
-        <root level="info">
+        <root level="debug">
             <appender-ref ref="RollingFile"/>
             <appender-ref ref="Console"/>
         </root>
