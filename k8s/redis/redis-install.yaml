@@ -73,4 +73,4 @@ spec:
       targetPort: 6379
 
 #Create configMap
-#Kubectl create configMap redis --from-file=redis.conf
+#kubectl create configmap redis --from-file=redis.conf
