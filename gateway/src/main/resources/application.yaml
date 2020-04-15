@@ -16,7 +16,7 @@
 #      default-filters:
 #        - name: Hystrix
 #          args:
-#            name: fallbackForeward
+#            name: fallbackForward
 #            fallbackUri: forward:/gateway/fallback
 #        - name: RequestRateLimiter
 #          args:
@@ -29,15 +29,27 @@
 #      httpclient:
 #        response-timeout: 2s
 #
-#    #      discovery:
-#    #        locator:
-#    #          enabled: true
-#    #          lower-case-service-id: true
-#    #          include-expression: serviceId.endsWith('CONSUMER')
+#      discovery:
+#        locator:
+#          enabled: true
+#          lower-case-service-id: true
+#          include-expression: serviceId.endsWith('CONSUMER')
 #hystrix:
+#  threadpool:
+#    HystrixGatewayFilterFactory:
+#      coreSize: 100
+#      maxQueueSize: 100
+#      queueSizeRejectionThreshold: 80
+#      maximumSize: 100
 #  command:
 #    fallbackForward:
 #      execution:
 #        isolation:
 #          thread:
-#            timeoutInMilliseconds:7000
+#            timeoutInMillseconds: 5000
+#          strategy: THREAD
+#      circuitBreaker:
+#        requestVolumeThreshold: 20
+#        errorThresholdPercentage: 50
+#        sleepWindowInMilliseconds: 5000
+#        enabled: true
