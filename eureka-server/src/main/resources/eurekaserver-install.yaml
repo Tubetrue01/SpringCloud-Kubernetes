@@ -5,8 +5,6 @@ metadata:
   labels:
     app: eureka-server
   namespace: demo
-  annotations:
-    traefik.backend.loadbalancer.sticky: "true"
 spec:
   selector:
     app: eureka-server
@@ -19,9 +17,6 @@ spec:
       name: management
       targetPort: 9091
   sessionAffinity: ClientIP
-  sessionAffinityConfig:
-    clientIP:
-      timeoutSeconds: 10800
 ---
 apiVersion: apps/v1
 kind: StatefulSet
