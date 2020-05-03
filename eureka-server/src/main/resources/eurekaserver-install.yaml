@@ -4,7 +4,7 @@ metadata:
   name: eureka-server
   labels:
     app: eureka-server
-  namespace: zpf
+  namespace: demo
 spec:
   clusterIP: None
   ports:
@@ -23,7 +23,7 @@ metadata:
   name: eureka-server
   labels:
     app: eureka-sever
-  namespace: zpf
+  namespace: demo
 spec:
   serviceName: eureka-server
   replicas: 2
@@ -38,7 +38,7 @@ spec:
     spec:
       containers:
         - name: eureka-server
-          image: tubetrue01/eureka-server:v4
+          image: tubetrue01/eureka-server:1.0.0
           ports:
             - containerPort: 9090
               name: server
@@ -47,6 +47,10 @@ spec:
           env:
             - name: APP_NAME
               value: "eureka-server"  # ServiceName
+            - name: POD_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
             - name: POD_NAME
               valueFrom:
                 fieldRef:
@@ -68,7 +72,7 @@ spec:
           resources:
             limits:
               cpu: 1000m
-              memory: 512Mi
+              memory: 400Mi
             requests:
               cpu: 100m
               memory: 200Mi
