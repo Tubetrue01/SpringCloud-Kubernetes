@@ -82,6 +82,9 @@ spec:
             timeoutSeconds: 10
             failureThreshold: 5
             httpGet:
+              httpHeaders:
+                - name: Authorization
+                  value: Basic cm9vdDpyb290
               path: /actuator/health
               port: 9091
           livenessProbe:
@@ -90,11 +93,17 @@ spec:
             timeoutSeconds: 5
             failureThreshold: 3
             httpGet:
+              httpHeaders:
+                - name: Authorization
+                  value: Basic cm9vdDpyb290
               path: /actuator/health
               port: 9091
           lifecycle:
             preStop:
               httpGet:
+                httpHeaders:
+                  - name: Authorization
+                    value: Basic cm9vdDpyb290
                 port: 9090
                 path: /eureka/offline
           volumeMounts:
