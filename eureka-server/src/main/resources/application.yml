@@ -15,8 +15,8 @@ eureka:
        user.name: ${spring.security.user.name}
        user.password: ${spring.security.user.password}
    client:
-     fetch-registry: false
-     register-with-eureka: false
+     fetch-registry: true
+     register-with-eureka: true
      service-url:
        defaultZone: http://root:root@localhost:9090/eureka
 management:
