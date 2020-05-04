@@ -17,6 +17,7 @@
         <zipkin.ui.version>2.12.3</zipkin.ui.version>
         <zipkin.rabbit.version>2.12.3</zipkin.rabbit.version>
         <spring-cloud.version>Greenwich.SR4</spring-cloud.version>
+        <dockerfile-maven-version>1.4.13</dockerfile-maven-version>
     </properties>
 
     <dependencies>
@@ -101,7 +102,30 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
+
+            <plugin>
+                <groupId>com.spotify</groupId>
+                <artifactId>dockerfile-maven-plugin</artifactId>
+                <version>${dockerfile-maven-version}</version>
+                <executions>
+                    <execution>
+                        <id>default</id>
+                        <goals>
+                            <goal>build</goal>
+                            <goal>push</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <repository>tubetrue01/zipkin</repository>
+                    <tag>${project.version}</tag>
+                    <buildArgs>
+                        <JAR_FILE>${project.build.finalName}.jar</JAR_FILE>
+                    </buildArgs>
+                </configuration>
+            </plugin>
         </plugins>
+        <finalName>zipkin</finalName>
     </build>
 
 </project>
