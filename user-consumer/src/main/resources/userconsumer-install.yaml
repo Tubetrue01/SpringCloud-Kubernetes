@@ -46,7 +46,7 @@ spec:
                      --registerWithEureka=true
                      --fetchRegistry=true
                      --eureka.instance.preferIpAddress=true
-                     --eureka.client.service-url.defaultZone=http://eureka-server-0.eureka-server:9090/eureka,http://eureka-server-1.eureka-server:9090/eureka
+                     --eureka.client.service-url.defaultZone=http://root:root@eureka-server-0.eureka-server:9090/eureka,http://root:root@eureka-server-1.eureka-server:9090/eureka
                      "
           resources:
             limits:
@@ -61,6 +61,9 @@ spec:
             timeoutSeconds: 10
             failureThreshold: 5
             httpGet:
+              httpHeaders:
+                - name: Authorization
+                  value: Basic cm9vdDpyb290
               path: /actuator/health
               port: 7071
           livenessProbe:
@@ -69,13 +72,20 @@ spec:
             timeoutSeconds: 5
             failureThreshold: 3
             httpGet:
+              httpHeaders:
+                - name: Authorization
+                  value: Basic cm9vdDpyb290
               path: /actuator/health
               port: 7071
           lifecycle:
             preStop:
               httpGet:
+                httpHeaders:
+                  - name: Authorization
+                    value: Basic cm9vdDpyb290
                 port: 7070
                 path: /userconsumer/eureka/offline
+          imagePullPolicy: Always
           volumeMounts:
             - mountPath: /var/log/springcloud/user-consumer
               name: log-path

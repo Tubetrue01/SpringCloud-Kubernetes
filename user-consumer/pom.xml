@@ -12,6 +12,10 @@
     <name>UserConsumer</name>
     <packaging>jar</packaging>
 
+    <properties>
+        <dockerfile-maven-version>1.4.13</dockerfile-maven-version>
+    </properties>
+
     <dependencies>
         <!-- Sleuth Zipkin Start-->
         <dependency>
@@ -55,4 +59,31 @@
             <artifactId>spring-cloud-starter-openfeign</artifactId>
         </dependency>
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>com.spotify</groupId>
+                <artifactId>dockerfile-maven-plugin</artifactId>
+                <version>${dockerfile-maven-version}</version>
+                <executions>
+                    <execution>
+                        <id>default</id>
+                        <goals>
+                            <goal>build</goal>
+                            <goal>push</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <repository>tubetrue01/user-consumer</repository>
+                    <tag>${project.version}</tag>
+                    <buildArgs>
+                        <JAR_FILE>${project.build.finalName}.jar</JAR_FILE>
+                    </buildArgs>
+                </configuration>
+            </plugin>
+        </plugins>
+        <finalName>user-consumer</finalName>
+    </build>
 </project>
