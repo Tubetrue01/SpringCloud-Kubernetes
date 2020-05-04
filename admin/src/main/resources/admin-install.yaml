@@ -89,13 +89,20 @@ spec:
             timeoutSeconds: 5
             failureThreshold: 3
             httpGet:
+              httpHeaders:
+                - name: Authorization
+                  value: Basic cm9vdDpyb290
               path: /actuator/health
               port: 1011
           lifecycle:
             preStop:
               httpGet:
+                httpHeaders:
+                  - name: Authorization
+                    value: Basic cm9vdDpyb290
                 port: 1010
                 path: /eureka/offline
+          imagePullPolicy: Always
           volumeMounts:
             - mountPath: /var/log/springcloud/admin
               name: log-path
