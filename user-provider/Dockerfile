@@ -1,6 +1,7 @@
 FROM tubetrue01/openjdk:11.0.6-jre
 
-ADD *.jar /usr/local/web/user-provider.jar
+ARG JAR_FILE
+ADD target/${JAR_FILE} /usr/local/web/user-provider.jar
 
 ENV JVM_OPTS="-Xss256k -Duser.timezone=Asia/Shanghai -Djava.security.egd=file:/dev/./urandom"
 ENV JAVA_OPTS=""
