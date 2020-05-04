@@ -40,9 +40,9 @@ spec:
                      --spring.rabbitmq.username=guest
                      --spring.rabbitmq.password=guest
                      --spring.rabbitmq.port=5672
-                     --spring.application.name=user-provider
-                     --eureka.instance.appname=user-provider
-                     --eureka.instance.hostname=user-provider.user-provider
+                     --spring.application.name=${APP_NAME}
+                     --eureka.instance.appname=${APP_NAME}
+                     --eureka.instance.hostname=${POD_NAME}.${APP_NAME}
                      --registerWithEureka=true
                      --fetchRegistry=true
                      --eureka.instance.preferIpAddress=true
