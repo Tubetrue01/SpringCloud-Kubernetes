@@ -68,7 +68,7 @@ spec:
                      --registerWithEureka=true
                      --fetchRegistry=true
                      --eureka.instance.preferIpAddress=true      # Must be true otherwise the openFeign can't resolve the host
-                     --eureka.client.service-url.defaultZone=http://eureka-server-0.${APP_NAME}:9090/eureka,http://eureka-server-1.${APP_NAME}:9090/eureka
+                     --eureka.client.service-url.defaultZone=http://root:root@eureka-server-0.${APP_NAME}:9090/eureka,http://root:root@eureka-server-1.${APP_NAME}:9090/eureka
                      "
           resources:
             limits:
