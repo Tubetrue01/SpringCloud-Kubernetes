@@ -84,7 +84,7 @@ spec:
                   - name: Authorization
                     value: Basic cm9vdDpyb290
                 port: 8080
-                path: /userprovider/eureka/offline
+                path: /eureka/offline
           volumeMounts:
             - mountPath: /var/log/springcloud/user-provider
               name: log-path

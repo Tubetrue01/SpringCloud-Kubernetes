@@ -84,7 +84,7 @@ spec:
                   - name: Authorization
                     value: Basic cm9vdDpyb290
                 port: 7070
-                path: /userconsumer/eureka/offline
+                path: /consumer/eureka/offline
           imagePullPolicy: Always
           volumeMounts:
             - mountPath: /var/log/springcloud/user-consumer
