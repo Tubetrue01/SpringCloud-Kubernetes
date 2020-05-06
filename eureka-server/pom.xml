@@ -19,6 +19,12 @@
 
 
 	<dependencies>
+		<!-- Prometheus Actuator -->
+		<dependency>
+			<groupId>io.micrometer</groupId>
+			<artifactId>micrometer-registry-prometheus</artifactId>
+		</dependency>
+
 		<!-- Eureka-Server -->
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
