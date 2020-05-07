@@ -11,6 +11,10 @@
     <version>1.0.0</version>
     <name>ConfigServer</name>
 
+    <properties>
+        <dockerfile-maven-version>1.4.13</dockerfile-maven-version>
+    </properties>
+
     <dependencies>
         <!-- SpringCloud Config Server -->
         <dependency>
@@ -31,5 +35,32 @@
         </dependency>
 
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>com.spotify</groupId>
+                <artifactId>dockerfile-maven-plugin</artifactId>
+                <version>${dockerfile-maven-version}</version>
+                <executions>
+                    <execution>
+                        <id>default</id>
+                        <goals>
+                            <goal>build</goal>
+                            <goal>push</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <repository>tubetrue01/config-server</repository>
+                    <tag>${project.version}</tag>
+                    <buildArgs>
+                        <JAR_FILE>${project.build.finalName}.jar</JAR_FILE>
+                    </buildArgs>
+                </configuration>
+            </plugin>
+        </plugins>
+        <finalName>config-server</finalName>
+    </build>
 
 </project>

@@ -1,0 +1,112 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: config-server
+  labels:
+    app: config-server
+  namespace: demo
+spec:
+  type: NodePort
+  ports:
+    - port: 4040
+      name: http
+      targetPort: 4040
+      nodePort: 30040
+  selector:
+    app: config-server
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: config-server
+  labels:
+    app: config-server
+  namespace: demo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: config-server
+  template:
+    metadata:
+      labels:
+        app: config-server
+    spec:
+      containers:
+        - name: config-server
+          image: tubetrue01/config-server:1.0.0
+          ports:
+            - containerPort: 4040
+              name: server
+            - containerPort: 4041
+              name: management
+          env:
+            - name: APP_NAME
+              value: "config-server"
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: POD_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP
+            - name: APP_OPTS
+              value: "
+                     --spring.rabbitmq.host=rabbitmq
+                     --spring.rabbitmq.username=guest
+                     --spring.rabbitmq.password=guest
+                     --spring.rabbitmq.port=5672
+                     --spring.application.name=${APP_NAME}
+                     --eureka.instance.appname=${APP_NAME}
+                     --eureka.instance.hostname=${POD_NAME}.${APP_NAME}
+                     --registerWithEureka=true
+                     --fetchRegistry=true
+                     --eureka.instance.preferIpAddress=true
+                     --eureka.client.service-url.defaultZone=http://root:root@eureka-server-0.eureka-server:9090/eureka,http://root:root@eureka-server-1.eureka-server:9090/eureka
+                     "
+          resources:
+            limits:
+              cpu: 1000m
+              memory: 400Mi
+            requests:
+              cpu: 100m
+              memory: 200Mi
+          readinessProbe:
+            initialDelaySeconds: 20
+            periodSeconds: 5
+            timeoutSeconds: 10
+            failureThreshold: 5
+            httpGet:
+              httpHeaders:
+                - name: Authorization
+                  value: Basic cm9vdDpyb290
+              path: /actuator/health
+              port: 4041
+          livenessProbe:
+            initialDelaySeconds: 60
+            periodSeconds: 5
+            timeoutSeconds: 5
+            failureThreshold: 3
+            httpGet:
+              httpHeaders:
+                - name: Authorization
+                  value: Basic cm9vdDpyb290
+              path: /actuator/health
+              port: 4041
+          lifecycle:
+            preStop:
+              httpGet:
+                httpHeaders:
+                  - name: Authorization
+                    value: Basic cm9vdDpyb290
+                port: 4040
+                path: /eureka/offline
+          volumeMounts:
+            - mountPath: /var/log/springcloud/config-server
+              name: log-path
+      volumes:
+        - name: log-path
+          hostPath:
+            path: /var/log/springcloud/config-server
+
